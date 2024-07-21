@@ -1,35 +1,111 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import {
+  OrbitControls,
+  OrthographicCamera,
+  PerspectiveCamera,
+} from "@react-three/drei";
+import * as THREE from "three";
+import { a, useSpring } from "@react-spring/three";
 
-function App() {
-  const [count, setCount] = useState(0)
+const Grid = () => {
+  const gridRef = useRef<THREE.GridHelper>(null);
+  return (
+    <gridHelper
+      ref={gridRef}
+      args={[1000, 1000]}
+      rotation={[0, Math.PI / 2, 0]}
+      position={[0, 0, 200]}
+    />
+  );
+};
+
+const Scene = ({ cameraProps, isOrthographic }: any) => {
+  const { scene } = useThree();
+  scene.background = new THREE.Color("lightGray");
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* 애니메이션된 카메라 사용 */}
+      {isOrthographic ? (
+        <OrthographicCamera
+          makeDefault
+          zoom={1}
+          top={200}
+          bottom={-200}
+          left={200}
+          right={-200}
+          near={1}
+          far={2000}
+          position={[0, 0, 200]}
+        />
+      ) : (
+        <PerspectiveCamera
+          makeDefault
+          position={[0, 0, 200]}
+          fov={75}
+          near={0.1}
+          far={1000}
+        />
+      )}
+      <OrbitControls />
+      <Grid />
+
+      <ambientLight intensity={0.25} />
+      <pointLight intensity={0.75} position={[500, 500, 1000]} />
+
+      <Box position={[70, 70, 0]} />
+      <Box position={[-70, 70, 0]} />
+      <Box position={[70, -70, 0]} />
+      <Box position={[-70, -70, 0]} />
     </>
-  )
+  );
+};
+
+const Box = (props) => {
+  const boxRef = useRef();
+
+  return (
+    <mesh ref={boxRef} {...props}>
+      <boxGeometry args={[100, 100, 100]} />
+      <meshStandardMaterial attach="material" color={"orange"} />
+    </mesh>
+  );
+};
+
+function App() {
+  const [isOrthographic, setIsOrthographic] = useState(true);
+
+  const cameraProps = useSpring({
+    position: isOrthographic ? [0, 0, 500] : [300, 300, 300],
+    zoom: isOrthographic ? 1 : 1,
+    config: { tension: 170, friction: 26 },
+  });
+
+  return (
+    <div>
+      <button
+        style={{
+          position: "relative",
+          zIndex: 1,
+        }}
+        onClick={() => setIsOrthographic(!isOrthographic)}
+      >
+        {isOrthographic ? "2D" : "3D"}
+      </button>
+      <Canvas
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      >
+        <Scene cameraProps={cameraProps} isOrthographic={isOrthographic} />
+      </Canvas>
+    </div>
+  );
 }
 
-export default App
+export default App;
