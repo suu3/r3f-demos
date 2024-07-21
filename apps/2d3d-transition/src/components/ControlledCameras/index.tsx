@@ -1,24 +1,3 @@
-/* This component wraps a PerspectiveCamera, OrthographicCamera, and CameraControls and allows smoothly transitioning
- * back and forth between the two cameras.
- * Note: it is designed to completely replace the default R3F camera system and should not be used alongside other cameras
- *
- * The component forwards an instance of CameraControls as the ref and all methods and props described here https://github.com/yomotsu/camera-controls
- * are available.
- *
- * View mode transition works by lerping between the orthographic and perspective projections matrices,
- * while camera-controls handles the position/target transitions.
- *  Popmotion is used for lerping the matrices  - it should be possible to swap in any animation library (e.g. Tween.js)
- *  as long as it can animate between two arrays of numbers
- *
- * State is saved for each view type - so switching back to a perspective/ortho will return the camera
- *   to the same position it was previously in for that view
- * Limitations and issues:
- *  - The "zoom" mode needs to be zoom for orthographic and dolly for perspective
- *    (see camera-controls docs for the difference and note that this is already the default, so just don't change it!)
- *  - Resizing the canvas during a transition might make projection matrices go out of sync (not tested)
- *  - changing the orthographicCameraProps.zoom after initialisation will cause problems
- */
-
 import { ReactThreeFiber, useThree } from "@react-three/fiber";
 import CameraControlsImpl from "camera-controls";
 import { animate } from "popmotion";
@@ -109,8 +88,8 @@ export type ControlledCamerasProps = ReactThreeFiber.Overwrite<
     onWake?: (e) => void;
     onRest?: (e) => void;
     onSleep?: (e) => void;
-    mouseButtons: Partial<CameraControlsImpl["mouseButtons"]>;
-    touches: Partial<CameraControlsImpl["touches"]>;
+    mouseButtons?: Partial<CameraControlsImpl["mouseButtons"]>;
+    touches?: Partial<CameraControlsImpl["touches"]>;
   }
 >;
 
@@ -421,3 +400,5 @@ export const ControlledCameras = forwardRef<
     );
   }
 );
+
+export default ControlledCameras;

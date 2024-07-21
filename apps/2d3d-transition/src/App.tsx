@@ -1,12 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  OrbitControls,
-  OrthographicCamera,
-  PerspectiveCamera,
-} from "@react-three/drei";
+import { useRef, useState } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
+
 import * as THREE from "three";
-import { a, useSpring } from "@react-spring/three";
+import Camera from "./components/Camera";
 
 const Grid = () => {
   const gridRef = useRef<THREE.GridHelper>(null);
@@ -20,44 +16,22 @@ const Grid = () => {
   );
 };
 
-const Scene = ({ cameraProps, isOrthographic }: any) => {
+const Scene = ({ isOrthographic }: any) => {
   const { scene } = useThree();
   scene.background = new THREE.Color("lightGray");
 
   return (
     <>
-      {/* 애니메이션된 카메라 사용 */}
-      {isOrthographic ? (
-        <OrthographicCamera
-          makeDefault
-          zoom={1}
-          top={200}
-          bottom={-200}
-          left={200}
-          right={-200}
-          near={1}
-          far={2000}
-          position={[0, 0, 200]}
-        />
-      ) : (
-        <PerspectiveCamera
-          makeDefault
-          position={[0, 0, 200]}
-          fov={75}
-          near={0.1}
-          far={1000}
-        />
-      )}
-      <OrbitControls />
+      <Camera mode={isOrthographic ? "orthographic" : "perspective"} />
       <Grid />
 
       <ambientLight intensity={0.25} />
       <pointLight intensity={0.75} position={[500, 500, 1000]} />
 
-      <Box position={[70, 70, 0]} />
-      <Box position={[-70, 70, 0]} />
-      <Box position={[70, -70, 0]} />
-      <Box position={[-70, -70, 0]} />
+      <Box position={[7, 7, 0]} />
+      <Box position={[-7, 7, 0]} />
+      <Box position={[7, -7, 0]} />
+      <Box position={[-7, -7, 0]} />
     </>
   );
 };
@@ -67,7 +41,7 @@ const Box = (props) => {
 
   return (
     <mesh ref={boxRef} {...props}>
-      <boxGeometry args={[100, 100, 100]} />
+      <boxGeometry args={[10, 10, 10]} />
       <meshStandardMaterial attach="material" color={"orange"} />
     </mesh>
   );
@@ -75,12 +49,6 @@ const Box = (props) => {
 
 function App() {
   const [isOrthographic, setIsOrthographic] = useState(true);
-
-  const cameraProps = useSpring({
-    position: isOrthographic ? [0, 0, 500] : [300, 300, 300],
-    zoom: isOrthographic ? 1 : 1,
-    config: { tension: 170, friction: 26 },
-  });
 
   return (
     <div>
@@ -102,7 +70,7 @@ function App() {
           bottom: 0,
         }}
       >
-        <Scene cameraProps={cameraProps} isOrthographic={isOrthographic} />
+        <Scene isOrthographic={isOrthographic} />
       </Canvas>
     </div>
   );
