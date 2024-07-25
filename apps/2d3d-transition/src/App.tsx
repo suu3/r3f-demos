@@ -1,3 +1,7 @@
+/**
+ * https://codesandbox.io/p/sandbox/r3f-controlledcameras-orthographic-perspective-transition-8uvue?file=%2Fsrc%2FCamera.tsx
+ */
+
 import { useRef, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 
