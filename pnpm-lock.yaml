@@ -124,12 +124,33 @@ importers:
 
   apps/vertigo:
     dependencies:
+      '@react-three/drei':
+        specifier: ^9.108.4
+        version: 9.108.4(@react-three/fiber@8.16.8)(@types/react@18.3.3)(@types/three@0.166.0)(react-dom@18.3.1)(react@18.3.1)(three@0.166.1)
+      '@react-three/fiber':
+        specifier: ^8.16.8
+        version: 8.16.8(react-dom@18.3.1)(react@18.3.1)(three@0.166.1)
+      '@types/dat.gui':
+        specifier: ^0.7.13
+        version: 0.7.13
+      '@types/three':
+        specifier: ^0.166.0
+        version: 0.166.0
+      dat.gui:
+        specifier: ^0.7.9
+        version: 0.7.9
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      three:
+        specifier: ^0.166.1
+        version: 0.166.1
+      three-stdlib:
+        specifier: ^2.30.5
+        version: 2.30.5(three@0.166.1)
     devDependencies:
       '@types/react':
         specifier: ^18.3.3
@@ -1270,7 +1291,7 @@ packages:
       suspend-react: 0.1.3(react@18.3.1)
       three: 0.166.1
       three-mesh-bvh: 0.7.6(three@0.166.1)
-      three-stdlib: 2.30.4(three@0.166.1)
+      three-stdlib: 2.30.5(three@0.166.1)
       troika-three-text: 0.49.1(three@0.166.1)
       tunnel-rat: 0.1.2(@types/react@18.3.3)(react@18.3.1)
       utility-types: 3.11.0
@@ -1590,6 +1611,10 @@ packages:
 
   /@tweenjs/tween.js@23.1.2:
     resolution: {integrity: sha512-kMCNaZCJugWI86xiEHaY338CU5JpD0B97p1j1IKNn/Zto8PgACjQx0UxbHjmOcLl/dDOBnItwD07KmCs75pxtQ==}
+
+  /@types/dat.gui@0.7.13:
+    resolution: {integrity: sha512-LmG4Pr0mbsB/1WVttf8xaHx45BvSBDGY5D9+0/9AZCbI4vvOguwBHZdKyJMxt5Yst8+icRSHKmr7ClV2u5ZtDA==}
+    dev: false
 
   /@types/draco3d@1.4.10:
     resolution: {integrity: sha512-AX22jp8Y7wwaBgAixaSvkoG4M/+PlAcm3Qs4OW8yT9DM4xUpWKeFhLueTAyZF39pviAdcDdeJoACapiAceqNcw==}
@@ -2547,6 +2572,10 @@ packages:
   /damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
     dev: true
+
+  /dat.gui@0.7.9:
+    resolution: {integrity: sha512-sCNc1OHobc+Erc1HqiswYgHdVNpSJUlk/Hz8vzOCsER7rl+oF/4+v8GXFUyCgtXpoCX6+bnmg07DedLvBLwYKQ==}
+    dev: false
 
   /debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -5030,8 +5059,8 @@ packages:
       three: 0.166.1
     dev: false
 
-  /three-stdlib@2.30.4(three@0.166.1):
-    resolution: {integrity: sha512-E7sN8UkaorSq2uRZU14AE7wXkdCBa2oFwPkPt92zaecuzrgd98BXkTt+2tFQVF1tPJRvfs7aMZV5dSOq4/vNVg==}
+  /three-stdlib@2.30.5(three@0.166.1):
+    resolution: {integrity: sha512-BBZkKnTDmUacXU9mv7fA5R7Brb89uUbOUWXXZKNrzdx6JEozJt3e6I5zPMRbb1FC2aw/2QFtgwPi1PI8VjX6FQ==}
     peerDependencies:
       three: '>=0.128.0'
     dependencies:
